@@ -9,5 +9,9 @@
 	<classpathentry kind="lib" path="lib/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="lib" path="lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/sqljdbc4-3.0.jar"/>
+	<classpathentry kind="lib" path="lib/aspose-cells-8.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/aspose-ocr-3.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/aspose-pdf-11.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

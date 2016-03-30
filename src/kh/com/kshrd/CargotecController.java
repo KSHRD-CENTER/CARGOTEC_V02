@@ -52,13 +52,13 @@ public class CargotecController {
 		String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
 		String path = System.getProperty("user.home");
 		ROOT = path + File.separator+ "CARGOTEC"+File.separator+ "image"+File.separator+fileNameWithoutExtn;
-		fileName = fileNameWithoutExtn;
 		if(!new File(ROOT).exists()){
 			new File(ROOT).mkdirs();
 		}
 		kh.com.kshrd.models.File file = new kh.com.kshrd.models.File();
-		String excelFilePath = filePath;
-		file.setName(excelFilePath);
+		//String excelFilePath = filePath;
+		String excelFilePath = System.getProperty("user.home") + File.separator + "CARGOTEC" + File.separator + "excel"+ File.separator;
+		file.setName(excelFilePath+fileName);
 		file.setStatus("1");
 		file.setCreatedDate(new Date());
 		if(fileRepository.checkExistFile(file.getName())){
@@ -69,7 +69,8 @@ public class CargotecController {
 			System.out.println("FILE ID=" + file.getId());
 			
 		}
-		FileInputStream inputStream = new FileInputStream(new File(excelFilePath));
+		fileName = fileNameWithoutExtn;
+		FileInputStream inputStream = new FileInputStream(new File(filePath));
 		Workbook workbook = WorkbookFactory.create(inputStream);
 		Sheet firstSheet = workbook.getSheetAt(0);
 		
@@ -83,8 +84,6 @@ public class CargotecController {
 				String filename = hssfPicture.getFileName();
 				int row = hssfPicture.getClientAnchor().getRow1();
 				int col = hssfPicture.getClientAnchor().getCol1();
-				/*System.out.println("Picture " + picIndex + " with Filename: " + filename + " is located row: " + row
-						+ ", col: " + col);*/
 				Content content = new Content();
 				content.setFilename(filename);
 				content.setPictureIndex(picIndex);
@@ -201,7 +200,7 @@ public class CargotecController {
 				model.setLogoBrand(parentContent.getLogoBrand());
 			}catch(Exception ex){
 				model.setParentId(null);
-				model.setLogoBrand(fileName+ "_" +firstSheet.getSheetName()+"_"+i+"." + ext);
+				model.setLogoBrand(ROOT+File.separator+firstSheet.getSheetName()+"_"+i+"." + ext);
 			}
 			try{
 				if(!"".equals(model.getEnglishTitle()))
@@ -218,11 +217,9 @@ public class CargotecController {
 			FileOutputStream out = null;
 			try{
 				Image image = new Image();
-				image.setFilename(fileName+"_"+firstSheet.getSheetName()+"_"+i+"." + ext);
+				image.setFilename(firstSheet.getSheetName()+"_"+i+"." + ext);
 				image.setStatus("1");
 				try{
-					//System.err.println(value.getCode() + " ==== " + value.getDate() + " ==== " + value.getEnglishTitle());
-					date = value.getDate().replace(" ", "").split("\\.");
 					previousContentId = modelRepository.findByCodeAndYearAndMonthAndEnglishTitleAndFileId(model).getId();
 					image.setContentId(previousContentId);
 					if(i==1){
