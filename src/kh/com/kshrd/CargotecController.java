@@ -65,7 +65,7 @@ public class CargotecController {
 			System.err.println("THE EXCEL THAT YOU HAVE BEEN CHOOSED TO INSERT HAS BEEN ALREADY INSERTED...");
 			return;
 		}else{			
-			file.setId(fileRepository.insert(file));
+			file.setId(fileRepository.save(file));
 			System.out.println("FILE ID=" + file.getId());
 			
 		}

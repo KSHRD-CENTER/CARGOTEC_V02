@@ -48,23 +48,4 @@ public class PartRepository{
 			return false;
 		}
 	}
-	
-	/*public boolean checkExistFile(String fileName){
-		String sql ="SELECT COUNT(file_id) FROM parts WHERE name=?";
-		try(
-			PreparedStatement pstmt = con.prepareStatement(sql);
-		){
-			pstmt.setString(1, fileName);
-			rs = pstmt.executeQuery();
-			if(rs.next()){
-				if(rs.getInt(1)>0){
-					return true;
-				}
-			}
-		}catch(SQLException ex){
-			System.err.println(ex.getMessage());
-			return false;
-		}
-		return false;
-	}*/
 }

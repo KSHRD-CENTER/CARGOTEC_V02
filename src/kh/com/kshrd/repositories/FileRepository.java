@@ -17,7 +17,7 @@ public class FileRepository{
 		con = ConnectionManagement.getConnection();
 	}
 	
-	public Long insert(File file){
+	public Long save(File file){
 		String sql ="INSERT INTO files(name, status, createdDate) VALUES(?,?,GETDATE());";
 		try(
 			PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
