@@ -16,6 +16,7 @@ public class ModelRepository{
 		con = ConnectionManagement.getConnection();
 	}
 	
+	//TODO: TO FIND MODEL AND FIND BY (CODE AND YEAR AND MONTH AND ENGLISH_TITLE AND FILE_ID) 
 	public Model findByCodeAndYearAndMonthAndEnglishTitleAndFileId(Model model){
 		String sql ="SELECT model_id, logoBrand, koreanTitle, englishTitle, year, month, code, parentId, fileId "
 				  + "FROM models "
@@ -73,6 +74,7 @@ public class ModelRepository{
 		}
 	}
 	
+	//TODO: TO FIND THE MODEL BY (CODE AND FILE_ID)
 	public Model findByCodeAndFileId(String code, Long fileId){
 		String sql ="SELECT model_id, logoBrand, koreanTitle, englishTitle, year, month, code, parentId, fileId "
 				  + "FROM models "
@@ -111,6 +113,8 @@ public class ModelRepository{
 		}
 	}
 	
+	
+	//TODO: TO SAVE THE MODEL TO THE DATABASE
 	public boolean save(Model model){
 		System.out.println("STARTING SAVING THE MODEL...");
 		String sql ="INSERT INTO models(logoBrand, koreanTitle, englishTitle, year, month, code, parentId, fileId) "

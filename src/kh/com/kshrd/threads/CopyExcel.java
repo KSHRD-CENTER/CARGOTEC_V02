@@ -3,10 +3,10 @@ package kh.com.kshrd.threads;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+//TODO: THREAD FOR COPYING THE EXCEL FILE
 public class CopyExcel extends Thread {
 
 	private String filePath;
@@ -54,23 +54,6 @@ public class CopyExcel extends Thread {
 			System.err.println("ENDING THE COPYING THE EXCEL FILE FAILURE....");
 		}
 
-/*		try {
-			File file = new File(filePath);
-			String path = System.getProperty("user.home") + File.separator + "CARGOTEC" + File.separator + "excel"
-					+ File.separator;
-			if (!new File(path).exists()) {
-				new File(path).mkdirs();
-			}
-			if (file.renameTo(new File(path + file.getName()))) {
-				System.out.println("FILE HAS BEEN COPIED ALREADY");
-			} else {
-				System.out.println("FILE HAS BEEN FAILED WHEN COPY.");
-			}
-			System.out.println("ENDING THE COPYING THE EXCEL FILE SUCCESSFULLY....");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("ENDING THE COPYING THE EXCEL FILE FAILURE....");
-		}*/
 	}
 
 }

@@ -9,7 +9,6 @@ import kh.com.kshrd.threads.ExportExcelToPDF;
 public class Cargotec {
 
 	public static void main(String[] args) throws Exception {
-
 		
 		new PropertiesManagement();
 
@@ -28,6 +27,7 @@ public class Cargotec {
 				cargotecController.execute(args[0]);
 			} else {
 				System.out.println("PLEASE ENTER YOUR EXCEL FILE");
+				System.err.println();
 			}
 			ConnectionManagement.getConnection().commit();
 		} catch (Exception ex) {
@@ -40,8 +40,6 @@ public class Cargotec {
 			}
 		}
 		ConnectionManagement.closeConnection();
-		
-		
 
 	}
 }

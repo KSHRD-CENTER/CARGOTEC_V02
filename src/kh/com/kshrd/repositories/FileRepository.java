@@ -1,13 +1,12 @@
 package kh.com.kshrd.repositories;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kh.com.kshrd.models.File;
-
+ 
 public class FileRepository{
 	
 	private Connection con;
@@ -17,6 +16,7 @@ public class FileRepository{
 		con = ConnectionManagement.getConnection();
 	}
 	
+	//TODO: TO SAVE THE FILE INFORMATION TO THE DATABASE
 	public Long save(File file){
 		String sql ="INSERT INTO files(name, status, createdDate) VALUES(?,?,GETDATE());";
 		try(
@@ -36,6 +36,7 @@ public class FileRepository{
 		return 0L;
 	}
 	
+	//TODO: TO CHECK THE FILENAME IS EXIST OR NOT
 	public boolean checkExistFile(String fileName){
 		String sql ="SELECT COUNT(file_id) FROM files WHERE name=?";
 		try(

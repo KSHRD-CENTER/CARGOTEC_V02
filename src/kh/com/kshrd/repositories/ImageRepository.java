@@ -2,7 +2,6 @@ package kh.com.kshrd.repositories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import kh.com.kshrd.models.Image;
@@ -10,12 +9,12 @@ import kh.com.kshrd.models.Image;
 public class ImageRepository {
 
 	private Connection con;
-	private ResultSet rs;
 	
 	public ImageRepository(){
 		con = ConnectionManagement.getConnection();
 	}
 	
+	//TODO: TO SAVE THE IMAGE TO THE DATABASE
 	public boolean save(Image image){
 		
 		String sql ="INSERT INTO images(url, filename, model_id, status) "
