@@ -34,6 +34,7 @@ public class CargotecController {
 	
 	private static String ROOT = "";
 	private static String fileName = "";
+	private static String fileNameWithoutExtn ="";
 	private static String parentId ="";
 	private FileRepository fileRepository;
 	private ImageRepository imageRepository;
@@ -54,7 +55,7 @@ public class CargotecController {
 		fileName = filePath.substring( filePath.lastIndexOf(File.separator)+1, filePath.length() );
 		
 		//TODO: TO GET FILENAME WITHOUT EXTENSION
-		String fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
+		fileNameWithoutExtn = fileName.substring(0, fileName.lastIndexOf('.'));
 		
 		//TODO: TO GET THE USER DIRECTORY FILE
 		String path = System.getProperty("user.home");
@@ -197,40 +198,39 @@ public class CargotecController {
 			}
 			
 			//TODO: TO READ THE DESCRIPTION OF PARTS TO THE DATABASE
-			if(descriptionSection.equals("")){
-				int j = row+4;
-				while(!(firstSheet.getRow(j).getCell(1)+"").equals("")){
-					if(!"MAIN  SUBDIVISIONS".equals(firstSheet.getRow(row+1).getCell(2)+"")){
-						String no = "";
-						no = firstSheet.getRow(j).getCell(0)+"";
+			System.out.println("DESCRIPTION ==> " + descriptionSection);
+			int j = row+4;
+			while(!(firstSheet.getRow(j).getCell(1)+"").equals("")){
+				if(!"MAIN  SUBDIVISIONS".equals(firstSheet.getRow(row+1).getCell(2)+"")){
+					String no = "";
+					no = firstSheet.getRow(j).getCell(0)+"";
+					no = no.replace(".0", "");
+					no = no.replace("-","0");
+					String partNo = firstSheet.getRow(j).getCell(1)+"";
+					String koreanTitle = firstSheet.getRow(j).getCell(3)+"";
+					String englishTitle = firstSheet.getRow(j+1).getCell(3)+"";
+					String quantity = firstSheet.getRow(j).getCell(4)+"";
+					String remarks = firstSheet.getRow(j).getCell(5)+"";
+					
+					//TODO: TO ADD THE PARTS TO THE MODEL(Content)
+					value.getDescriptions().add(new Part(no,partNo,koreanTitle,englishTitle,quantity,remarks,code, contentId));
+										
+					//TODO: TO READ THE VALUE FROM THE SPARE PART...
+					if(!(firstSheet.getRow(j).getCell(6)+"").equals("")){
+						no = firstSheet.getRow(j).getCell(6)+"";
 						no = no.replace(".0", "");
 						no = no.replace("-","0");
-						String partNo = firstSheet.getRow(j).getCell(1)+"";
-						String koreanTitle = firstSheet.getRow(j).getCell(3)+"";
-						String englishTitle = firstSheet.getRow(j+1).getCell(3)+"";
-						String quantity = firstSheet.getRow(j).getCell(4)+"";
-						String remarks = firstSheet.getRow(j).getCell(5)+"";
-						
-						//TODO: TO ADD THE PARTS TO THE MODEL(Content)
+						partNo = firstSheet.getRow(j).getCell(7)+"";
+						koreanTitle = firstSheet.getRow(j).getCell(9)+"";
+						englishTitle = firstSheet.getRow(j+1).getCell(9)+"";
+						quantity = firstSheet.getRow(j).getCell(10)+"";
+						remarks = firstSheet.getRow(j).getCell(11)+"";
+						code = firstSheet.getRow(row).getCell(10)+"";
 						value.getDescriptions().add(new Part(no,partNo,koreanTitle,englishTitle,quantity,remarks,code, contentId));
-											
-						//TODO: TO READ THE VALUE FROM THE SPARE PART...
-						if(!(firstSheet.getRow(j).getCell(6)+"").equals("")){
-							no = firstSheet.getRow(j).getCell(6)+"";
-							no = no.replace(".0", "");
-							no = no.replace("-","0");
-							partNo = firstSheet.getRow(j).getCell(7)+"";
-							koreanTitle = firstSheet.getRow(j).getCell(9)+"";
-							englishTitle = firstSheet.getRow(j+1).getCell(9)+"";
-							quantity = firstSheet.getRow(j).getCell(10)+"";
-							remarks = firstSheet.getRow(j).getCell(11)+"";
-							code = firstSheet.getRow(row).getCell(10)+"";
-							value.getDescriptions().add(new Part(no,partNo,koreanTitle,englishTitle,quantity,remarks,code, contentId));
-						}
-						//System.out.println(value.getDescriptions());
 					}
-					j+=2;
+					//System.out.println(value.getDescriptions());
 				}
+				j+=2;
 			}
 			//TODO: TO SAVE THE PARTS TO THE DATABASE
 			partRepository.save(value.getDescriptions());
@@ -251,7 +251,6 @@ public class CargotecController {
 				Model parentContent = modelRepository.findByCodeAndFileId(parentId, value.getFileId());
 				model.setParentId(parentContent.getId());
 				model.setLogoBrand(parentContent.getLogoBrand());
-				
 			}catch(Exception ex){
 				model.setParentId(null);
 				model.setLogoBrand(ROOT+File.separator+firstSheet.getSheetName()+"_"+i+"." + ext);
@@ -274,24 +273,24 @@ public class CargotecController {
 			FileOutputStream out = null;
 			try{
 				Image image = new Image();
-				image.setFilename(firstSheet.getSheetName()+"_"+i+"." + ext);
+				image.setFilename(fileNameWithoutExtn+"_"+firstSheet.getSheetName()+"_"+i+"." + ext);
 				image.setStatus("1");
 				try{
 					//TODO: TO FIND THE PREVIOUS CONTENT ID
 					previousContentId = modelRepository.findByCodeAndYearAndMonthAndEnglishTitleAndFileId(model).getId();
 					image.setContentId(previousContentId);
 					if(i==1){
-						out  = new FileOutputStream(ROOT+File.separator+firstSheet.getSheetName()+"_"+i+"." + ext);
+						out  = new FileOutputStream(ROOT+File.separator+fileNameWithoutExtn+"_"+firstSheet.getSheetName()+"_"+i+"." + ext);
 						out.write(data);
 						out.close();
 					}
 				}catch(Exception ex){
 					image.setContentId(previousContentId);
-					if((i+1)%3==0){
-						out  = new FileOutputStream(ROOT+File.separator+firstSheet.getSheetName()+"_"+i+"." + ext);
+					//if((i+1)%3==0){
+						out  = new FileOutputStream(ROOT+File.separator+fileNameWithoutExtn+"_"+firstSheet.getSheetName()+"_"+i+"." + ext);
 						out.write(data);
 						out.close(); 
-					}
+					//}
 					image.setUrl(ROOT+File.separator+firstSheet.getSheetName()+"_"+i+"." + ext);
 					imageRepository.save(image);
 				}

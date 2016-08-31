@@ -14,7 +14,6 @@ public class ConnectionManagement {
 
 	public ConnectionManagement() {
 		this(url, username, password,driver);
-		
 	}
 
 	public ConnectionManagement(String url, String username, String password,String ddriver) {

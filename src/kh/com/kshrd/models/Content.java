@@ -190,5 +190,13 @@ public class Content implements Serializable{
 	public void setFileId(Long fileId) {
 		this.fileId = fileId;
 	}
+	@Override
+	public String toString() {
+		return "Content [id=" + id + ", logoBrand=" + logoBrand + ", koreanTitle=" + koreanTitle + ", englishTitle="
+				+ englishTitle + ", date=" + date + ", code=" + code + ", hssfPicture=" + hssfPicture
+				+ ", pictureIndex=" + pictureIndex + ", filename=" + filename + ", row=" + row + ", column=" + column
+				+ ", description=" + description + ", fileId=" + fileId + ", descriptions=" + descriptions + ", images="
+				+ images + "]";
+	}
 	
 }
