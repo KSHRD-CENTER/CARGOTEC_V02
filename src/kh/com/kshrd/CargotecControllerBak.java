@@ -30,7 +30,7 @@ import kh.com.kshrd.repositories.ImageRepository;
 import kh.com.kshrd.repositories.ModelRepository;
 import kh.com.kshrd.repositories.PartRepository;
 
-public class CargotecController {
+public class CargotecControllerBak {
 	
 	private static String ROOT = "";
 	private static String fileName = "";
@@ -42,7 +42,7 @@ public class CargotecController {
 	private PartRepository partRepository;	
 	
 	//TODO: TO INITIALIZE THE REPOSITORY.
-	public CargotecController(){
+	public CargotecControllerBak(){
 		fileRepository = new FileRepository();
 		imageRepository = new ImageRepository();
 		modelRepository = new ModelRepository();
@@ -199,7 +199,7 @@ public class CargotecController {
 			
 			//TODO: TO READ THE DESCRIPTION OF PARTS TO THE DATABASE
 			System.out.println("DESCRIPTION ==> " + descriptionSection);
-			int j = row+4;
+			int j = row;//= row+4;
 			while(!(firstSheet.getRow(j).getCell(1)+"").equals("")){
 				if(!"MAIN  SUBDIVISIONS".equals(firstSheet.getRow(row+1).getCell(2)+"")){
 					String no = "";
