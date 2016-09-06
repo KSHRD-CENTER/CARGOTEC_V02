@@ -117,6 +117,9 @@ public class ModelRepository{
 	//TODO: TO SAVE THE MODEL TO THE DATABASE
 	public boolean save(Model model){
 		System.out.println("STARTING SAVING THE MODEL...");
+		if(model.getCode().trim().equals("")){
+			return false;
+		}
 		String sql ="INSERT INTO models(logoBrand, koreanTitle, englishTitle, year, month, code, parentId, fileId) "
 				  + "VALUES(?, ? ,?, ?, ?, ?, ?, ?);";
 		try(
